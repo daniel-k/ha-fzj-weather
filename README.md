@@ -30,7 +30,9 @@ After installation, you can import the package in your Python code:
 
 ```python
 from fzj_weather.weather import get_current_weather_metrics
-print(get_current_weather_metrics())
+
+weather = get_current_weather_metrics()
+print(weather.as_dict())
 ```
 
 ## Development
