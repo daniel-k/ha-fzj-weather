@@ -1,4 +1,5 @@
 import re
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Optional
 
 import requests
@@ -91,7 +92,33 @@ def parse_weather_metrics(html: str) -> WeatherMetrics:
                         metrics[field] = None
 
     ts_match = re.search(r"Aktuelle Messwerte vom ([^<]+)", html)
-    timestamp = ts_match.group(1).strip() if ts_match else None
+    ts_str = ts_match.group(1).strip() if ts_match else None
+
+    # Parse timestamp string: e.g., '11.07.2025 22:30 Uhr MEZ'
+    timestamp = None
+    if ts_str:
+        # Match date, time, and TZ info (MEZ/MESZ)
+        tz_offsets = {
+            "MEZ": timedelta(hours=1),  # UTC+1
+            "MESZ": timedelta(hours=2),  # UTC+2
+        }
+        match = re.match(
+            r"(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}) Uhr ?([A-ZÄÖÜ]{2,4})?", ts_str
+        )
+        if match:
+            dt_part = match.group(1)
+            tz_abbr = match.group(2)
+            try:
+                dt_naive = datetime.strptime(dt_part, "%d.%m.%Y %H:%M")
+                if tz_abbr in tz_offsets:
+                    tzinfo = timezone(tz_offsets[tz_abbr], name=tz_abbr)
+                else:
+                    tzinfo = None
+                ts_aware = dt_naive.replace(tzinfo=tzinfo)
+                # Convert to local timezone
+                timestamp = ts_aware.astimezone()
+            except Exception:
+                timestamp = None
 
     return WeatherMetrics(
         timestamp=timestamp,

@@ -1,3 +1,4 @@
+import datetime
 import pathlib
 
 import pytest
@@ -17,7 +18,14 @@ def test_get_current_weather_metrics(monkeypatch, data_html):
         "humidity_percent": 97.0,
         "pressure_hpa": 1006.4,
         "temperature_c": 16.1,
-        "timestamp": "11.07.2025 22:20 Uhr MEZ",
+        "timestamp": datetime.datetime(
+            2025,
+            7,
+            11,
+            22,
+            20,
+            tzinfo=datetime.timezone(datetime.timedelta(seconds=3600), "MEZ"),
+        ),
         "wind_direction_deg": 345.0,
         "wind_speed_ms": 0.1,
     }
