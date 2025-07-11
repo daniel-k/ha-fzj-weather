@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ha-fzj-weather"
+name = "fzj-weather"
 version = "0.1.0"
-description = "A Python library for FZJ weather integration with Home Assistant."
+description = "A Python library for scraping weather data from FZJ"
 authors = [{ name = "Your Name", email = "your.email@example.com" }]
 readme = "README.md"
 requires-python = ">=3.8"
@@ -15,9 +15,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = ["requests", "beautifulsoup4"]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/ha-fzj-weather"
+Homepage = "https://github.com/yourusername/fzj-weather"
 
 [tool.setuptools.packages.find]
 where = ["src"]
