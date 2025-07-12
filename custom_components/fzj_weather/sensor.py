@@ -7,10 +7,14 @@ import requests
 from bs4 import BeautifulSoup
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import (
+    # PRESSURE_HPA,
+    # SPEED_METERS_PER_SECOND,
+    # TEMP_CELSIUS,
+    DEGREE,
     PERCENTAGE,
-    PRESSURE_HPA,
-    SPEED_METERS_PER_SECOND,
-    TEMP_CELSIUS,
+    UnitOfPressure,
+    UnitOfSpeed,
+    UnitOfTemperature,
 )
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.update_coordinator import (
@@ -28,12 +32,12 @@ SCAN_INTERVAL = timedelta(minutes=10)
 SENSOR_TYPES = {
     "pressure_hpa": {
         "name": "Pressure",
-        "unit": PRESSURE_HPA,
+        "unit": UnitOfPressure.MBAR,
         "icon": "mdi:gauge",
     },
     "temperature_c": {
         "name": "Temperature",
-        "unit": TEMP_CELSIUS,
+        "unit": UnitOfTemperature.CELSIUS,
         "icon": "mdi:thermometer",
     },
     "humidity_percent": {
@@ -43,12 +47,12 @@ SENSOR_TYPES = {
     },
     "wind_speed_ms": {
         "name": "Wind Speed",
-        "unit": SPEED_METERS_PER_SECOND,
+        "unit": UnitOfSpeed.METERS_PER_SECOND,
         "icon": "mdi:weather-windy",
     },
     "wind_direction_deg": {
         "name": "Wind Direction",
-        "unit": "°",
+        "unit": DEGREE,
         "icon": "mdi:compass",
     },
 }
@@ -136,13 +140,15 @@ def parse_weather_metrics(html: str):
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Set up FZJ Weather sensor platform from YAML (legacy)."""
-    # Not supported - recommend config via integration entry only.
-    return True
+    return True  # Not supported; use config flow via UI.
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    """Set up FZJ Weather sensors from a config entry (for the future)."""
-    # For now, auto-load as a single platform (no config_flow).
+    """Set up FZJ Weather sensors from a config entry (via UI)."""
+    # Only allow a single entry
+    if hass.data.get("fzj_weather_loaded_entry") is not None:
+        return False
+
     coordinator = FZJWeatherDataUpdateCoordinator(hass)
     await coordinator.async_config_entry_first_refresh()
 
@@ -151,21 +157,12 @@ async def async_setup_entry(hass, entry, async_add_entities):
         for sensor_type in SENSOR_TYPES.keys()
     ]
     async_add_entities(sensors, update_before_add=True)
+    hass.data["fzj_weather_loaded_entry"] = entry.entry_id
 
 
 async def async_setup(hass, config):
     """Set up the integration via configuration.yaml (legacy)."""
-    # For simple polling sensors, we can set up through YAML config as well.
-    coordinator = FZJWeatherDataUpdateCoordinator(hass)
-    await coordinator.async_refresh()
-
-    def setup_entities():
-        return [
-            FZJWeatherSensor(coordinator, sensor_type)
-            for sensor_type in SENSOR_TYPES.keys()
-        ]
-
-    hass.helpers.discovery.load_platform("sensor", "fzj_weather", {}, config)
+    # Not supported with config flow enabled.
     return True
 
 

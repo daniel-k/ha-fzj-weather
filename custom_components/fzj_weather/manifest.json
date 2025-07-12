@@ -4,15 +4,10 @@
   "version": "0.1.0",
   "documentation": "https://github.com/yourusername/ha-fzj-weather",
   "issue_tracker": "https://github.com/yourusername/ha-fzj-weather/issues",
-  "requirements": [
-    "requests>=2.31.0",
-    "beautifulsoup4>=4.12.3"
-  ],
+  "requirements": ["requests>=2.31.0", "beautifulsoup4>=4.12.3"],
   "dependencies": [],
-  "codeowners": [
-    "@yourusername"
-  ],
+  "codeowners": ["@yourusername"],
   "iot_class": "cloud_polling",
-  "config_flow": false,
+  "config_flow": true,
   "integration_type": "sensor"
 }
