@@ -145,10 +145,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up FZJ Weather sensors from a config entry (via UI)."""
-    # Only allow a single entry
-    if hass.data.get("fzj_weather_loaded_entry") is not None:
-        return False
-
     # Get coordinator created in __init__.py async_setup_entry
     coordinator = hass.data["fzj_weather"][entry.entry_id]
 
@@ -157,7 +153,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
         for sensor_type in SENSOR_TYPES.keys()
     ]
     async_add_entities(sensors, update_before_add=True)
-    hass.data["fzj_weather_loaded_entry"] = entry.entry_id
 
 
 async def async_setup(hass, config):

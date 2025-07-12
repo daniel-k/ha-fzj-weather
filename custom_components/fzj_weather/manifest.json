@@ -9,5 +9,5 @@
   "codeowners": ["@yourusername"],
   "iot_class": "cloud_polling",
   "config_flow": true,
-  "integration_type": "sensor"
+  "integration_type": "service"
 }
