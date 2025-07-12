@@ -1,0 +1,21 @@
+{
+  "entity": {
+    "sensor": {
+      "fzj_weather_pressure_hpa": {
+        "name": "FZJ Pressure"
+      },
+      "fzj_weather_temperature_c": {
+        "name": "FZJ Temperature"
+      },
+      "fzj_weather_humidity_percent": {
+        "name": "FZJ Humidity"
+      },
+      "fzj_weather_wind_speed_ms": {
+        "name": "FZJ Wind Speed"
+      },
+      "fzj_weather_wind_direction_deg": {
+        "name": "FZJ Wind Direction"
+      }
+    }
+  }
+}

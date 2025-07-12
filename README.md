@@ -2,30 +2,64 @@
 
 A Python library for scraping weather data from FZJ
 
+---
+
+## Home Assistant Integration
+
+You can use this as a Home Assistant custom integration, installable via HACS or directly.
+
+### HACS Installation
+
+1. Go to HACS > Integrations > Custom repositories.
+2. Add the URL to this repository and set Category to "Integration".
+3. Search for "FZJ Weather" and install it.
+4. Restart Home Assistant.
+
+### Manual Installation
+
+1. Copy the entire `custom_components/fzj_weather` folder into your Home Assistant `/config/custom_components/` directory.
+2. Restart Home Assistant.
+
+### Configuration
+
+No options are required. After installation and restart, Home Assistant should auto-discover sensors named like:
+- `sensor.fzj_pressure`
+- `sensor.fzj_temperature`
+- `sensor.fzj_humidity`
+- `sensor.fzj_wind_speed`
+- `sensor.fzj_wind_direction`
+
+All values are polled from the live FZJ site every 10 minutes.
+
+---
+
+
 ## Project Structure
 
+```
 fzj-weather/
 │
-├── pyproject.toml                 # Project metadata and packaging configuration
-├── README.md                      # Project documentation (this file)
+├── custom_components/
+│   └── fzj_weather/          # Home Assistant custom integration code
+│
+├── pyproject.toml            # Project metadata and packaging configuration (library)
+├── README.md                 # Project documentation (this file)
 ├── src/
-│   └── fzj_weather/               # Library source code
-│       ├── __init__.py
-│       └── weather.py
+│   └── fzj_weather/          # Library source code (standalone use)
+├── hacs.json                 # HACS metadata
 └── tests/
-    ├── __init__.py                # Test suite init
-    ├── test_weather.py            # Tests for weather scraping
-    └── data.html                  # Sample HTML fixture for tests
+    └── __init__.py           # Test suite init
+```
 
-## Installation
+## Library Installation & Usage
 
-This project uses [PEP 517/518](https://www.python.org/dev/peps/pep-0517/) packaging with [setuptools]. To install locally for development:
+If you just want the Python scraping library for local development:
 
 ```bash
 pip install --editable .
 ```
 
-## Usage
+### Python Usage
 
 After installation, you can import the package in your Python code:
 

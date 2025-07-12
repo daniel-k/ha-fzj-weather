@@ -1,0 +1,12 @@
+{
+  "name": "FZJ Weather",
+  "content_in_root": false,
+  "domain": "fzj_weather",
+  "country": "DE",
+  "homeassistant": "2023.0.0",
+  "render_readme": true,
+  "description": "Home Assistant integration for live weather data from Forschungszentrum Jülich (FZJ)",
+  "documentation": "https://github.com/yourusername/ha-fzj-weather",
+  "repository": "https://github.com/yourusername/ha-fzj-weather",
+  "type": "integration"
+}
