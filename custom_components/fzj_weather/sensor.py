@@ -7,9 +7,6 @@ import requests
 from bs4 import BeautifulSoup
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import (
-    # PRESSURE_HPA,
-    # SPEED_METERS_PER_SECOND,
-    # TEMP_CELSIUS,
     DEGREE,
     PERCENTAGE,
     UnitOfPressure,
@@ -28,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 FZJ_WEATHER_URL = (
     "https://www.fz-juelich.de/de/gs/ueber-uns/meteo/aktuelle-wetterdaten/wetterdaten"
 )
-SCAN_INTERVAL = timedelta(minutes=10)
+SCAN_INTERVAL = timedelta(minutes=1)
 SENSOR_TYPES = {
     "pressure_hpa": {
         "name": "Pressure",
