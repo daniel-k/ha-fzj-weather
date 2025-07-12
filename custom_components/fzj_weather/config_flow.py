@@ -44,4 +44,4 @@ class FZJWeatherOptionsFlowHandler(config_entries.OptionsFlow):
 
     async def async_step_init(self, user_input=None):
         """Manage FZJ Weather options (currently none)."""
-        return self.async_create_entry(title="", data={})
+        return self.async_create_entry(title="title", data={})

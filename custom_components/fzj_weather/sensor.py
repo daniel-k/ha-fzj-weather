@@ -149,8 +149,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
     if hass.data.get("fzj_weather_loaded_entry") is not None:
         return False
 
-    coordinator = FZJWeatherDataUpdateCoordinator(hass)
-    await coordinator.async_config_entry_first_refresh()
+    # Get coordinator created in __init__.py async_setup_entry
+    coordinator = hass.data["fzj_weather"][entry.entry_id]
 
     sensors = [
         FZJWeatherSensor(coordinator, sensor_type)
