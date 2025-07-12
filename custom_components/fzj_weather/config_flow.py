@@ -40,7 +40,7 @@ class FZJWeatherOptionsFlowHandler(config_entries.OptionsFlow):
 
     def __init__(self, config_entry):
         """Initialize FZJ Weather options flow."""
-        self.config_entry = config_entry
+        pass
 
     async def async_step_init(self, user_input=None):
         """Manage FZJ Weather options (currently none)."""
